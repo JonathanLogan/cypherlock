@@ -19,6 +19,7 @@ var (
 	ErrKeylistUntrusted = errors.New("github.com/JonathanLogan/cypherlock/msgcryt: Keylist is untrusteed")
 )
 
+// GetRetchetCallBack
 type GetRatchetCallback func(serverURL string) (*types.RatchetList, error)
 
 // Cypherlock implements the client's github.com/JonathanLogan/cypherlock functionality.
@@ -37,6 +38,7 @@ func (cl *Cypherlock) init() {
 	}
 }
 
+// CreateLock creates a lock.
 func (cl *Cypherlock) CreateLock(passphrase []byte, secret []byte, validFrom, validTo uint64) (finalValidFrom, finalValidTo uint64, err error) {
 	cl.init()
 	secretKey, encrypted, err := EncryptRealSecret(secret, cl.randomSource)

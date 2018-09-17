@@ -81,6 +81,7 @@ func (rm *RatchetMessage) Parse(d []byte) (*RatchetMessage, error) {
 	return orm, nil
 }
 
+// Decrypt ratchet message.
 func (rm *RatchetMessage) Decrypt(getSecret ratchet.SecretFunc) error {
 	var ok bool
 	secret, err := DecryptRatchetKey(&rm.SenderPublicKey, &rm.DHNonce, &rm.RatchetPublicKey, getSecret)

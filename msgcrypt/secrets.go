@@ -9,7 +9,6 @@ import (
 	"io"
 
 	"github.com/JonathanLogan/cypherlock/ratchet"
-
 	"golang.org/x/crypto/curve25519"
 )
 

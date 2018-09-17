@@ -12,7 +12,7 @@ type RPCClient struct {
 	rpc *rpc.Client
 }
 
-// NewPRCClient connects and returns an rpcclient, addr is "host:port".
+// NewRPCClient connects and returns an rpcclient, addr is "host:port".
 func NewRPCClient(addr string) (*RPCClient, error) {
 	client, err := rpc.DialHTTP("tcp", addr)
 	if err != nil {

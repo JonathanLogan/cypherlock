@@ -125,6 +125,7 @@ func (om OracleMessage) Encrypt(passphrase []byte, rand io.Reader) (encrypted []
 	return enc, fn, nil
 }
 
+// Decrypt the OracleMessage.
 func (om OracleMessage) Decrypt(passphrase, message []byte) (*OracleMessage, error) {
 	ct, err := PasswordDecrypt(passphrase, message)
 	if err != nil {
@@ -142,6 +143,7 @@ type OracleMessageTemplate struct {
 	RatchetPublicKey [32]byte // The public key for the ratchet.
 }
 
+// CreateEncrypted creates an encrypted Oracle message from template.
 func (omt OracleMessageTemplate) CreateEncrypted(passphrase []byte, secretKey *[32]byte, rand io.Reader) (enc []byte, filename string, err error) {
 	om, err := omt.Create(secretKey, rand)
 	if err != nil {

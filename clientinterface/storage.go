@@ -26,6 +26,7 @@ type DefaultStorage struct {
 	Path string // Storage path
 }
 
+// StoreLock stores a lock.
 func (ds DefaultStorage) StoreLock(filename string, data []byte) error {
 	return ds.writeFile(filename, data)
 }
@@ -61,6 +62,7 @@ func parseFilename(fn string) (validFrom, validTo uint64, ok bool) {
 	return validFrom, validTo, true
 }
 
+// GetLock returns a matching lock.
 func (ds DefaultStorage) GetLock(now uint64) (data []byte, err error) {
 	var filename string
 	entries, err := ioutil.ReadDir(ds.Path)
@@ -87,12 +89,14 @@ FilterLoop:
 	return ds.readFile(filename)
 }
 
+// StoreKeylist stores a keylist.
 func (ds DefaultStorage) StoreKeylist(keys *types.RatchetList) error {
 	filename := "keylist"
 	data := keys.Bytes()
 	return ds.StoreLock(filename, data)
 }
 
+// GetKeylist reads a keylist.
 func (ds DefaultStorage) GetKeylist() (keys *types.RatchetList, err error) {
 	data, err := ds.readFile("keylist")
 	if err != nil {
@@ -101,11 +105,13 @@ func (ds DefaultStorage) GetKeylist() (keys *types.RatchetList, err error) {
 	return new(types.RatchetList).Parse(data)
 }
 
+// StoreSecret stores a secret.
 func (ds DefaultStorage) StoreSecret(data []byte) error {
 	filename := "secret"
 	return ds.StoreLock(filename, data)
 }
 
+// GetSecret loads a secret.
 func (ds DefaultStorage) GetSecret() (data []byte, err error) {
 	return ds.readFile("secret")
 }
