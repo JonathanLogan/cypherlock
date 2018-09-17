@@ -1,3 +1,4 @@
+// cypherlock implements a Cypherlock client.
 package main
 
 import (

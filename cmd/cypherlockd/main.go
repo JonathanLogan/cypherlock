@@ -1,4 +1,4 @@
-// package main implements a github.com/JonathanLogan/cypherlock server.
+// cypherlockd implements a Cypherlock server.
 package main
 
 import (

@@ -1,4 +1,4 @@
-// Package clrpcclient implements client RPC methods for github.com/JonathanLogan/cypherlock access.
+// Package clrpcclient implements client RPC methods for Cypherlock access.
 package clrpcclient
 
 import (
@@ -7,7 +7,7 @@ import (
 	"github.com/JonathanLogan/cypherlock/types"
 )
 
-// RPCClient is a github.com/JonathanLogan/cypherlock rpc client.
+// RPCClient is a Cypherlock RPC client.
 type RPCClient struct {
 	rpc *rpc.Client
 }

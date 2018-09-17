@@ -1,4 +1,4 @@
-// Package clrpcserver implements client and server RPC methods to call github.com/JonathanLogan/cypherlock.
+// Package clrpcserver implements client and server RPC methods to call Cypherlock.
 package clrpcserver
 
 import (
@@ -10,7 +10,7 @@ import (
 	"github.com/JonathanLogan/cypherlock/types"
 )
 
-// RPCServer implements a github.com/JonathanLogan/cypherlock rpc server over http(s).
+// RPCServer implements a Cypherlock RPC server over http(s).
 type RPCServer struct {
 	rpcmethods *RPCMethods
 }
