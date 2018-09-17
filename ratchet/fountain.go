@@ -13,17 +13,17 @@ import (
 type SecretFunc func(expectedPubKey, peerPubKey *[32]byte) (*[32]byte, error)
 
 // Overwriteable for testing.
-var unixNow func() int64 = func() int64 {
+var unixNow = func() int64 {
 	return timesource.Clock.Now().Unix()
 }
 
 var (
 	// ErrInvalidDuration signifies that a given duration was invalid, that is smaller than 1.
-	ErrInvalidDuration = errors.New("github.com/JonathanLogan/cypherlock/ratchet: Invalid Duration.")
+	ErrInvalidDuration = errors.New("ratchet: invalid duration")
 	// ErrNoService signifies that attempting to send to a close service will fail.
-	ErrNoService = errors.New("github.com/JonathanLogan/cypherlock/ratchet: Ratchet fountain service stopped.")
+	ErrNoService = errors.New("ratchet: ratchet fountain service stopped")
 	// ErrRatchetNotFound signifies that a secret was requested that refers to a ratchet state that is not current.
-	ErrRatchetNotFound = errors.New("github.com/JonathanLogan/cypherlock/ratchet: Ratchet not found.")
+	ErrRatchetNotFound = errors.New("ratchet: ratchet not found")
 )
 
 // Fountain is a ratchet with timing information, that is: When did a ratchet start, and how often

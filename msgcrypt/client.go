@@ -12,11 +12,11 @@ import (
 
 var (
 	// ErrNoLocksFound is returned if no matching locks could be found in the keylist of the server.
-	ErrNoLocksFound = errors.New("github.com/JonathanLogan/cypherlock/msgcrypt: No matching locks found")
+	ErrNoLocksFound = errors.New("msgcrypt: no matching locks found")
 	// ErrNoKeylist is returned if no keylist is available.
-	ErrNoKeylist = errors.New("github.com/JonathanLogan/cypherlock/msgcrypt: No keylist available")
+	ErrNoKeylist = errors.New("msgcrypt: no keylist available")
 	// ErrKeylistUntrusted is returned if the keylist could not be verified.
-	ErrKeylistUntrusted = errors.New("github.com/JonathanLogan/cypherlock/msgcryt: Keylist is untrusteed")
+	ErrKeylistUntrusted = errors.New("msgcryt: keylist is untrusteed")
 )
 
 // Cypherlock implements the client's github.com/JonathanLogan/cypherlock functionality.
