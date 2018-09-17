@@ -53,7 +53,7 @@ func (rl *RatchetList) addKeyField() {
 	copy(rl.ListHash[:], h)
 }
 
-// Sign. Make sure EnvelopeKey and SignatureKey are set.
+// Sign RatchetList. Make sure EnvelopeKey and SignatureKey are set.
 func (rl *RatchetList) Sign(privateKey *[ed25519.PrivateKeySize]byte) {
 	rl.addKeyField()
 	signature := ed25519.Sign(privateKey[:], rl.ListHash[:])
@@ -108,7 +108,8 @@ func (rl *RatchetList) setBody(d []byte, pos int) error {
 	return nil
 }
 
-var ErrParse = errors.New("github.com/JonathanLogan/cypherlock/types: Parsing error")
+// ErrParse defines a parsing error.
+var ErrParse = errors.New("types: parsing error")
 
 // Parse a binary RatchetList into struct.
 func (rl *RatchetList) Parse(d []byte) (*RatchetList, error) {
