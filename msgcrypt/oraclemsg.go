@@ -118,7 +118,7 @@ func (om *OracleMessage) Unmarshall(d []byte) (*OracleMessage, error) {
 // Encrypt the OracleMessage
 func (om OracleMessage) Encrypt(passphrase []byte, rand io.Reader) (encrypted []byte, filename string, err error) {
 	fn := strconv.FormatUint(om.ValidFrom, 10) + "-" + strconv.FormatUint(om.ValidTo, 10) + ".oracle"
-	enc, err := PasswordEncryt(passphrase, om.Marshall(), rand)
+	enc, err := PasswordEncrypt(passphrase, om.Marshall(), rand)
 	if err != nil {
 		return nil, "", err
 	}

@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	// ErrMesssageIncomplete is returned when a message is too short.
+	// ErrMessageIncomplete is returned when a message is too short.
 	ErrMessageIncomplete = errors.New("github.com/JonathanLogan/cypherlock/msgcrypt: Message incomplete")
 	// ErrCannotDecrypt is returned if the decryption failed.
 	ErrCannotDecrypt = errors.New("github.com/JonathanLogan/cypherlock/msgcrypt: Decryption failed")
@@ -27,6 +27,7 @@ func genSymNonce(rand io.Reader) (*[24]byte, error) {
 	return r, nil
 }
 
+// GenKeyPair generates a new key pair.
 func GenKeyPair(rand io.Reader) (pubkey, privkey *[32]byte, err error) {
 	pubkey = new([32]byte)
 	privkey, err = genRandom(rand)
