@@ -37,12 +37,12 @@ type Fountain struct {
 // service description
 type service struct {
 	c       chan interface{}
-	ratchet *RatchetState // The fountain's ratchet.
+	ratchet *State // The fountain's ratchet.
 }
 
 // getRatchet message type, return ratchetstate.
 type getRatchet struct {
-	c chan *RatchetState
+	c chan *State
 }
 
 // getSecret message type, return calculated secret.
@@ -54,7 +54,7 @@ type getSecret struct {
 
 // stopService message type, return ratchetstate.
 type stopService struct {
-	c    chan *RatchetState
+	c    chan *State
 	stop bool
 }
 
@@ -72,7 +72,7 @@ func NewFountain(duration int64, rand io.Reader) (*Fountain, error) {
 	return newFountain(r, unixNow(), duration), nil
 }
 
-func newFountain(r *RatchetState, startdate, duration int64) *Fountain {
+func newFountain(r *State, startdate, duration int64) *Fountain {
 	f := &Fountain{
 		startdate: startdate,
 		duration:  duration,
@@ -166,9 +166,9 @@ func (f *Fountain) sendToService(d interface{}) (err error) {
 }
 
 // Stop the fountain.
-func (f *Fountain) Stop() *RatchetState {
+func (f *Fountain) Stop() *State {
 	m := stopService{
-		c: make(chan *RatchetState, 1),
+		c: make(chan *State, 1),
 	}
 	err := f.sendToService(m)
 	if err != nil {
@@ -179,9 +179,9 @@ func (f *Fountain) Stop() *RatchetState {
 	return r
 }
 
-func (f *Fountain) getRatchet() *RatchetState {
+func (f *Fountain) getRatchet() *State {
 	m := getRatchet{
-		c: make(chan *RatchetState, 1),
+		c: make(chan *State, 1),
 	}
 	err := f.sendToService(m)
 	if err != nil {
@@ -234,7 +234,7 @@ func (f *Fountain) Unmarshall(d []byte) *Fountain {
 	}
 	startdate := binary.BigEndian.Uint64(d[:8])
 	duration := binary.BigEndian.Uint64(d[8:16])
-	r := new(RatchetState).Unmarshall(d[16:])
+	r := new(State).Unmarshall(d[16:])
 	if r == nil {
 		return nil
 	}

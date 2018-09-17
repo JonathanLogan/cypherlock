@@ -8,7 +8,7 @@ import (
 
 // PreGenerator is a fountain pregenerator.
 type PreGenerator struct {
-	ratchet        *RatchetState
+	ratchet        *State
 	startdate      int64    // Unix time of the start date.
 	duration       int64    // Number of seconds between ratchet steps.
 	pregenInterval int64    // For how long to generate keys in advance.

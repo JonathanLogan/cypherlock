@@ -9,19 +9,19 @@ package ratchet
 
 // RatchetRing contains three ratchets, one current, one past, one future.
 type RatchetRing struct {
-	past, current, future *RatchetState
+	past, current, future *State
 }
 
 // NewRatchetRing returns a new, possibly filled, RatchetRing. pastStep is the expected
 // counter value for the past value. Operates on a copy of ratchet.
-func NewRatchetRing(ratchet *RatchetState, currentStep uint64) *RatchetRing {
+func NewRatchetRing(ratchet *State, currentStep uint64) *RatchetRing {
 	rr := new(RatchetRing)
 	rr.set(ratchet, currentStep)
 	return rr
 }
 
 // set ring to given currentStep, using a copy of ratchet.
-func (rr *RatchetRing) set(ratchet *RatchetState, currentStep uint64) {
+func (rr *RatchetRing) set(ratchet *State, currentStep uint64) {
 	r := ratchet.Copy()
 	c := r.Counter()
 	if c > currentStep {
@@ -60,9 +60,9 @@ func (rr *RatchetRing) Step() {
 	rr.future.Step()              // continue on future.
 }
 
-// Current returns a copy of the Current Ratchet State for Marshalling.
+// Current returns a copy of the current ratchet state for marshalling.
 // The past state will be lost in marshalling.
-func (rr *RatchetRing) Current() *RatchetState {
+func (rr *RatchetRing) Current() *State {
 	return rr.current.Copy()
 }
 
@@ -71,9 +71,9 @@ func (rr *RatchetRing) CurrentStep() uint64 {
 	return rr.current.Counter()
 }
 
-// Find the RatchetState that matches the expected public key and return a copy, or nil
+// Find the ratchet state that matches the expected public key and return a copy, or nil
 // if not found.
-func (rr *RatchetRing) Find(expect *[32]byte) *RatchetState {
+func (rr *RatchetRing) Find(expect *[32]byte) *State {
 	if rr.current != nil && rr.current.PublicKey == *expect {
 		return rr.current.Copy()
 	}
