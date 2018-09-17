@@ -29,9 +29,9 @@ func TestPassword(t *testing.T) {
 	passphrase := []byte("Secret passphrase")
 	message := []byte("Test message")
 
-	msg, err := PasswordEncryt(passphrase, message, rand.Reader)
+	msg, err := PasswordEncrypt(passphrase, message, rand.Reader)
 	if err != nil {
-		t.Errorf("PasswordEncryt: %s", err)
+		t.Errorf("PasswordEncrypt: %s", err)
 	}
 	ct, err := PasswordDecrypt(passphrase, msg)
 	if err != nil {
