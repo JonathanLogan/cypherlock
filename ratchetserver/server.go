@@ -111,7 +111,7 @@ func (rs *RatchetServer) Persist() error {
 	return rs.persist()
 }
 
-// Write data to persistance layer.
+// Write data to persistence layer.
 func (rs *RatchetServer) persist() error {
 	// StoreTypeServerKeys
 	if err := rs.persistence.Store(StoreTypeServerKeys, rs.keys.Marshall()); err != nil {

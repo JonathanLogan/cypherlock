@@ -15,7 +15,7 @@ var (
 	ErrPolicyExpired = errors.New("github.com/JonathanLogan/cypherlock/msgcrypt: Policy expired")
 )
 
-// OracleMessage countains an oracle message for the sender, and the secret access.
+// OracleMessage contains an oracle message for the sender, and the secret access.
 type OracleMessage struct {
 	ValidFrom          uint64   // From when is the message valid.
 	ValidTo            uint64   // Until when is the message valid.
