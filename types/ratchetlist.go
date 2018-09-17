@@ -108,7 +108,7 @@ func (rl *RatchetList) setBody(d []byte, pos int) error {
 	return nil
 }
 
-// ErrParse defines a parsing error.
+// ErrParse is returned in case of a parsing error.
 var ErrParse = errors.New("types: parsing error")
 
 // Parse a binary RatchetList into struct.

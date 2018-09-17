@@ -12,7 +12,7 @@ import (
 
 var (
 	// ErrPolicyExpired is returned when the policy of a message has expired.
-	ErrPolicyExpired = errors.New("github.com/JonathanLogan/cypherlock/msgcrypt: Policy expired")
+	ErrPolicyExpired = errors.New("msgcrypt: policy expired")
 )
 
 // OracleMessage contains an oracle message for the sender, and the secret access.

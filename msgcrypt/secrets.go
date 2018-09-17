@@ -13,9 +13,9 @@ import (
 
 var (
 	// ErrMessageIncomplete is returned when a message is too short.
-	ErrMessageIncomplete = errors.New("github.com/JonathanLogan/cypherlock/msgcrypt: Message incomplete")
+	ErrMessageIncomplete = errors.New("msgcrypt: message incomplete")
 	// ErrCannotDecrypt is returned if the decryption failed.
-	ErrCannotDecrypt = errors.New("github.com/JonathanLogan/cypherlock/msgcrypt: Decryption failed")
+	ErrCannotDecrypt = errors.New("msgcrypt: decryption failed")
 )
 
 func genSymNonce(rand io.Reader) (*[24]byte, error) {
