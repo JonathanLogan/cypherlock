@@ -22,6 +22,7 @@ const (
 	StoreTypeKeyList
 )
 
+// Persistence defines the persistency interface of a ratchet server.
 type Persistence interface {
 	Store(storeType StoreType, data []byte) error // Write data of type StoreType to persistent storage.
 	Load(storeType StoreType) ([]byte, error)     // Load data of type StoreType from persistent storage.

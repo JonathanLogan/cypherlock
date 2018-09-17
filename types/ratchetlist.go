@@ -86,7 +86,7 @@ func (rl *RatchetList) findPubKeys(d []byte) int {
 		}
 		em := new([pageEntryMarshallSize]byte)
 		copy(em[:], d[i:i+pageEntryMarshallSize])
-		e := new(PregenerateEntry).Unmarshall(em)
+		e := Unmarshall(em)
 		if e != nil {
 			rl.Append(*e)
 		}

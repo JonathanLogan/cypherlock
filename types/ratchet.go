@@ -28,6 +28,7 @@ func NewPregenerateEntry(previousHash *[32]byte, counter, validFrom, validTo uin
 	return pge
 }
 
+// Copy PregenerateEntry.
 func (pge *PregenerateEntry) Copy() *PregenerateEntry {
 	npge := &PregenerateEntry{
 		Counter:   pge.Counter,
@@ -55,6 +56,7 @@ func (pge *PregenerateEntry) Hash(previous *[32]byte) {
 	copy(pge.LineHash[:], nh)
 }
 
+// Validate PregenerateEntry.
 func (pge *PregenerateEntry) Validate(previous *[32]byte) bool {
 	npge := pge.Copy()
 	npge.Hash(previous)
@@ -63,20 +65,20 @@ func (pge *PregenerateEntry) Validate(previous *[32]byte) bool {
 
 const pageEntryMarshallSize = 89
 
-// Marshall a Pregenerateentry.
-func (pg *PregenerateEntry) Marshall() *[pageEntryMarshallSize]byte {
+// Marshall a PregenerateEntry.
+func (pge *PregenerateEntry) Marshall() *[pageEntryMarshallSize]byte {
 	ret := new([pageEntryMarshallSize]byte)
 	ret[0] = 0x02
-	binary.BigEndian.PutUint64(ret[1:9], pg.Counter)
-	binary.BigEndian.PutUint64(ret[9:17], pg.ValidFrom)
-	binary.BigEndian.PutUint64(ret[17:25], pg.ValidTo)
-	copy(ret[25:57], pg.LineHash[:])
-	copy(ret[57:89], pg.PublicKey[:])
+	binary.BigEndian.PutUint64(ret[1:9], pge.Counter)
+	binary.BigEndian.PutUint64(ret[9:17], pge.ValidFrom)
+	binary.BigEndian.PutUint64(ret[17:25], pge.ValidTo)
+	copy(ret[25:57], pge.LineHash[:])
+	copy(ret[57:89], pge.PublicKey[:])
 	return ret
 }
 
-// Unmarshall a PregenerateEntry.
-func (pg *PregenerateEntry) Unmarshall(entry *[pageEntryMarshallSize]byte) *PregenerateEntry {
+// Unmarshall a pregenerate entry.
+func Unmarshall(entry *[pageEntryMarshallSize]byte) *PregenerateEntry {
 	if entry == nil {
 		return nil
 	}
