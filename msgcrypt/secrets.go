@@ -2,12 +2,13 @@
 package msgcrypt
 
 import (
-	"github.com/JonathanLogan/cypherlock/ratchet"
 	"crypto"
 	"crypto/hmac"
 	_ "crypto/sha256"
 	"errors"
 	"io"
+
+	"github.com/JonathanLogan/cypherlock/ratchet"
 
 	"golang.org/x/crypto/curve25519"
 )

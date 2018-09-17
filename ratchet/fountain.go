@@ -1,11 +1,12 @@
 package ratchet
 
 import (
-	"github.com/JonathanLogan/cypherlock/timesource"
 	"encoding/binary"
 	"errors"
 	"io"
 	"time"
+
+	"github.com/JonathanLogan/cypherlock/timesource"
 )
 
 // SecretFunc is a function that returns a secret for a ratchet key.

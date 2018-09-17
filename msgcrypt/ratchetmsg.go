@@ -1,9 +1,9 @@
 package msgcrypt
 
 import (
-	"github.com/JonathanLogan/cypherlock/ratchet"
 	"io"
 
+	"github.com/JonathanLogan/cypherlock/ratchet"
 	"golang.org/x/crypto/nacl/secretbox"
 )
 

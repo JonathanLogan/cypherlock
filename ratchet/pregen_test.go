@@ -1,10 +1,11 @@
 package ratchet
 
 import (
-	"github.com/JonathanLogan/cypherlock/timesource"
 	"crypto/rand"
 	"testing"
 	"time"
+
+	"github.com/JonathanLogan/cypherlock/timesource"
 )
 
 var nc *timesource.MockClock

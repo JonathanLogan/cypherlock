@@ -2,8 +2,9 @@
 package clrpcclient
 
 import (
-	"github.com/JonathanLogan/cypherlock/types"
 	"net/rpc"
+
+	"github.com/JonathanLogan/cypherlock/types"
 )
 
 // RPCClient is a github.com/JonathanLogan/cypherlock rpc client.

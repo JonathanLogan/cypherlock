@@ -2,12 +2,13 @@
 package clientinterface
 
 import (
-	"github.com/JonathanLogan/cypherlock/types"
 	"io/ioutil"
 	"os"
 	"path"
 	"strconv"
 	"strings"
+
+	"github.com/JonathanLogan/cypherlock/types"
 )
 
 // Storage is the interface to be implemented by storage backends.

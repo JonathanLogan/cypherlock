@@ -2,11 +2,12 @@
 package clrpcserver
 
 import (
-	"github.com/JonathanLogan/cypherlock/ratchetserver"
-	"github.com/JonathanLogan/cypherlock/types"
 	"net"
 	"net/http"
 	"net/rpc"
+
+	"github.com/JonathanLogan/cypherlock/ratchetserver"
+	"github.com/JonathanLogan/cypherlock/types"
 )
 
 // RPCServer implements a github.com/JonathanLogan/cypherlock rpc server over http(s).

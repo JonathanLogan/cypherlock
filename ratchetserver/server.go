@@ -3,13 +3,13 @@
 package ratchetserver
 
 import (
-	"github.com/JonathanLogan/cypherlock/msgcrypt"
-	"github.com/JonathanLogan/cypherlock/ratchet"
-	"github.com/JonathanLogan/cypherlock/timesource"
 	"errors"
 	"io"
 	"time"
 
+	"github.com/JonathanLogan/cypherlock/msgcrypt"
+	"github.com/JonathanLogan/cypherlock/ratchet"
+	"github.com/JonathanLogan/cypherlock/timesource"
 	"golang.org/x/crypto/curve25519"
 	"golang.org/x/crypto/ed25519"
 )

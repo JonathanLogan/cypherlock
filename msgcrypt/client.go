@@ -1,12 +1,12 @@
 package msgcrypt
 
 import (
-	"github.com/JonathanLogan/cypherlock/clientinterface"
-	"github.com/JonathanLogan/cypherlock/types"
 	"crypto/rand"
 	"errors"
 	"io"
 
+	"github.com/JonathanLogan/cypherlock/clientinterface"
+	"github.com/JonathanLogan/cypherlock/types"
 	"golang.org/x/crypto/ed25519"
 )
 

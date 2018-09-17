@@ -1,11 +1,11 @@
 package msgcrypt
 
 import (
-	"github.com/JonathanLogan/cypherlock/ratchet"
 	"crypto/rand"
 	"errors"
 	"testing"
 
+	"github.com/JonathanLogan/cypherlock/ratchet"
 	"golang.org/x/crypto/curve25519"
 )
 

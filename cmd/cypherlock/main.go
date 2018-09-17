@@ -1,8 +1,6 @@
 package main
 
 import (
-	"github.com/JonathanLogan/cypherlock/clientinterface"
-	"github.com/JonathanLogan/cypherlock/msgcrypt"
 	"bytes"
 	"encoding/hex"
 	"flag"
@@ -12,6 +10,8 @@ import (
 	"time"
 	"unicode"
 
+	"github.com/JonathanLogan/cypherlock/clientinterface"
+	"github.com/JonathanLogan/cypherlock/msgcrypt"
 	"golang.org/x/crypto/ed25519"
 	"golang.org/x/crypto/ssh/terminal"
 )

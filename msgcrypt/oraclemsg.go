@@ -1,12 +1,13 @@
 package msgcrypt
 
 import (
-	"github.com/JonathanLogan/cypherlock/ratchet"
-	"github.com/JonathanLogan/cypherlock/timesource"
 	"encoding/binary"
 	"errors"
 	"io"
 	"strconv"
+
+	"github.com/JonathanLogan/cypherlock/ratchet"
+	"github.com/JonathanLogan/cypherlock/timesource"
 )
 
 var (

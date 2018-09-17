@@ -1,8 +1,9 @@
 package ratchet
 
 import (
-	"github.com/JonathanLogan/cypherlock/types"
 	"encoding/binary"
+
+	"github.com/JonathanLogan/cypherlock/types"
 )
 
 type PreGenerator struct {
