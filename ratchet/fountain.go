@@ -83,7 +83,7 @@ func newFountain(r *RatchetState, startdate, duration int64) *Fountain {
 	return f
 }
 
-// Start the ratcheting service.s
+// StartService starts the ratcheting services.
 func (f *Fountain) StartService() {
 	f.serviceDesc.c = make(chan interface{}, 2)
 	go f.service()
@@ -165,6 +165,7 @@ func (f *Fountain) sendToService(d interface{}) (err error) {
 	return nil
 }
 
+// Stop the fountain.
 func (f *Fountain) Stop() *RatchetState {
 	m := stopService{
 		c: make(chan *RatchetState, 1),
@@ -192,6 +193,7 @@ func (f *Fountain) getRatchet() *RatchetState {
 	return r
 }
 
+// GetSecret from fountain.
 func (f *Fountain) GetSecret(expectedPubKey, peerPubKey *[32]byte) (*[32]byte, error) {
 	inT, pubT := new([32]byte), new([32]byte)
 	copy(inT[:], peerPubKey[:])      // Prevent programming errors.

@@ -40,6 +40,7 @@ func (rr *RatchetRing) set(ratchet *RatchetState, currentStep uint64) {
 	rr.future = rr.current.Copy().Step()
 }
 
+// StepTo steps to currentStep.
 func (rr *RatchetRing) StepTo(currentStep uint64) {
 	c := rr.current.Counter()
 	if c == currentStep {
@@ -52,7 +53,7 @@ func (rr *RatchetRing) StepTo(currentStep uint64) {
 	rr.set(rr.current, currentStep)
 }
 
-// Execute one step for the ratchets.
+// Step executes one step for the ratchets.
 func (rr *RatchetRing) Step() {
 	rr.past = rr.current.Copy()   // current is ALWAYS set.
 	rr.current = rr.future.Copy() // future is ALWAYS set.

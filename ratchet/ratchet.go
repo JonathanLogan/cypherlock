@@ -2,9 +2,8 @@
 package ratchet
 
 import (
-	"crypto"
 	"crypto/hmac"
-	_ "crypto/sha256"
+	"crypto/sha256"
 	"encoding/binary"
 	"io"
 
@@ -70,11 +69,11 @@ func (r *RatchetState) Counter() uint64 {
 
 // Step continues the ratchet by one more step.
 func (r *RatchetState) Step() *RatchetState {
-	r.counter += 1
+	r.counter++
 	d := make([]byte, 40)
 	binary.BigEndian.PutUint64(d, r.counter)
 	copy(d[8:], r.dynamic[:])
-	h := hmac.New(crypto.SHA256.New, r.static[:])
+	h := hmac.New(sha256.New, r.static[:])
 	h.Write(d)
 	nd := h.Sum(nil)
 	copy(r.dynamic[:], nd)
@@ -84,7 +83,7 @@ func (r *RatchetState) Step() *RatchetState {
 
 // Generate private and public key based on Ratchet state.
 func (r *RatchetState) genkeys() {
-	h := hmac.New(crypto.SHA256.New, r.dynamic[:])
+	h := hmac.New(sha256.New, r.dynamic[:])
 	h.Write(r.static[:])
 	res := h.Sum(nil)
 	copy(r.privateKey[:], res)
@@ -108,7 +107,7 @@ func (r *RatchetState) Copy() *RatchetState {
 func (r *RatchetState) SharedSecret(peerPubKey *[32]byte) *[32]byte {
 	dst, out := new([32]byte), new([32]byte)
 	curve25519.ScalarMult(dst, &r.privateKey, peerPubKey)
-	h := crypto.SHA256.New()
+	h := sha256.New()
 	h.Write(dst[:])
 	ss := h.Sum(nil)
 	copy(out[:], ss)
