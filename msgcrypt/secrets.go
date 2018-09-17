@@ -2,9 +2,8 @@
 package msgcrypt
 
 import (
-	"crypto"
 	"crypto/hmac"
-	_ "crypto/sha256"
+	"crypto/sha256"
 	"errors"
 	"io"
 
@@ -77,7 +76,7 @@ func DecryptKey(sendKey *[32]byte, nonce *[32]byte, myPrivateKey *[32]byte) (sec
 }
 
 func keyHMAC(presecret, nonce *[32]byte) (secret *[32]byte) {
-	h := hmac.New(crypto.SHA256.New, nonce[:])
+	h := hmac.New(sha256.New, nonce[:])
 	h.Write(presecret[:])
 	secretT := h.Sum(nil)
 	secret = new([32]byte)
@@ -87,7 +86,7 @@ func keyHMAC(presecret, nonce *[32]byte) (secret *[32]byte) {
 
 func keyHASH(presecret *[32]byte) (secret *[32]byte) {
 	secret = new([32]byte)
-	h := crypto.SHA256.New()
+	h := sha256.New()
 	h.Write(presecret[:])
 	ss := h.Sum(nil)
 	copy(secret[:], ss)

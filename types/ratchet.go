@@ -2,8 +2,7 @@
 package types
 
 import (
-	"crypto"
-	_ "crypto/sha256"
+	"crypto/sha256"
 	"encoding/binary"
 )
 
@@ -50,7 +49,7 @@ func (pge *PregenerateEntry) Hash(previous *[32]byte) {
 		copy(npge.LineHash[:], empty[:])
 	}
 	d := npge.Marshall()
-	h := crypto.SHA256.New()
+	h := sha256.New()
 	h.Write(d[:])
 	nh := h.Sum(nil)
 	copy(pge.LineHash[:], nh)
