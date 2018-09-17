@@ -1,17 +1,18 @@
-// Package clrpcclient implements client RPC methods for github.com/JonathanLogan/cypherlock access.
+// Package clrpcclient implements client RPC methods for Cypherlock access.
 package clrpcclient
 
 import (
-	"github.com/JonathanLogan/cypherlock/types"
 	"net/rpc"
+
+	"github.com/JonathanLogan/cypherlock/types"
 )
 
-// RPCClient is a github.com/JonathanLogan/cypherlock rpc client.
+// RPCClient is a Cypherlock RPC client.
 type RPCClient struct {
 	rpc *rpc.Client
 }
 
-// NewPRCClient connects and returns an rpcclient, addr is "host:port".
+// NewRPCClient connects and returns an rpcclient, addr is "host:port".
 func NewRPCClient(addr string) (*RPCClient, error) {
 	client, err := rpc.DialHTTP("tcp", addr)
 	if err != nil {

@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestRatchetState(t *testing.T) {
+func TestState(t *testing.T) {
 	r, err := NewRatchet(rand.Reader)
 	if err != nil {
 		t.Fatalf("Reader: %s", err)
@@ -31,7 +31,7 @@ func TestRatchetState(t *testing.T) {
 	}
 
 	m := r.Marshall()
-	r2 := new(RatchetState).Unmarshall(m)
+	r2 := new(State).Unmarshall(m)
 	if r2 == nil {
 		t.Fatal("Unmarshall")
 	}

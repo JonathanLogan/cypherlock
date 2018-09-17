@@ -1,10 +1,11 @@
 package msgcrypt
 
 import (
-	"github.com/JonathanLogan/cypherlock/timesource"
 	"bytes"
 	"crypto/rand"
 	"testing"
+
+	"github.com/JonathanLogan/cypherlock/timesource"
 )
 
 func TestOracleMessageMarshall(t *testing.T) {

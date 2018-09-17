@@ -12,9 +12,9 @@ import (
 
 var (
 	// ErrSecretToLong is returned when trying to encode a real secret over 500 byte length.
-	ErrSecretToLong = errors.New("github.com/JonathanLogan/cypherlock/msgcrypt: Secret too long")
+	ErrSecretToLong = errors.New("msgcrypt: secret too long")
 	// ErrEncryptedTooShort is returned if the encrypted message is too short.
-	ErrEncryptedTooShort = errors.New("github.com/JonathanLogan/cypherlock/msgcrypt: Encrypted message too short")
+	ErrEncryptedTooShort = errors.New("msgcrypt: encrypted message too short")
 )
 
 // MaxSecretSize is the maximum size of a secret.

@@ -1,28 +1,29 @@
 package ratchet
 
 import (
-	"github.com/JonathanLogan/cypherlock/timesource"
 	"encoding/binary"
 	"errors"
 	"io"
 	"time"
+
+	"github.com/JonathanLogan/cypherlock/timesource"
 )
 
 // SecretFunc is a function that returns a secret for a ratchet key.
 type SecretFunc func(expectedPubKey, peerPubKey *[32]byte) (*[32]byte, error)
 
 // Overwriteable for testing.
-var unixNow func() int64 = func() int64 {
+var unixNow = func() int64 {
 	return timesource.Clock.Now().Unix()
 }
 
 var (
 	// ErrInvalidDuration signifies that a given duration was invalid, that is smaller than 1.
-	ErrInvalidDuration = errors.New("github.com/JonathanLogan/cypherlock/ratchet: Invalid Duration.")
+	ErrInvalidDuration = errors.New("ratchet: invalid duration")
 	// ErrNoService signifies that attempting to send to a close service will fail.
-	ErrNoService = errors.New("github.com/JonathanLogan/cypherlock/ratchet: Ratchet fountain service stopped.")
+	ErrNoService = errors.New("ratchet: ratchet fountain service stopped")
 	// ErrRatchetNotFound signifies that a secret was requested that refers to a ratchet state that is not current.
-	ErrRatchetNotFound = errors.New("github.com/JonathanLogan/cypherlock/ratchet: Ratchet not found.")
+	ErrRatchetNotFound = errors.New("ratchet: ratchet not found")
 )
 
 // Fountain is a ratchet with timing information, that is: When did a ratchet start, and how often
@@ -36,12 +37,12 @@ type Fountain struct {
 // service description
 type service struct {
 	c       chan interface{}
-	ratchet *RatchetState // The fountain's ratchet.
+	ratchet *State // The fountain's ratchet.
 }
 
 // getRatchet message type, return ratchetstate.
 type getRatchet struct {
-	c chan *RatchetState
+	c chan *State
 }
 
 // getSecret message type, return calculated secret.
@@ -53,7 +54,7 @@ type getSecret struct {
 
 // stopService message type, return ratchetstate.
 type stopService struct {
-	c    chan *RatchetState
+	c    chan *State
 	stop bool
 }
 
@@ -71,7 +72,7 @@ func NewFountain(duration int64, rand io.Reader) (*Fountain, error) {
 	return newFountain(r, unixNow(), duration), nil
 }
 
-func newFountain(r *RatchetState, startdate, duration int64) *Fountain {
+func newFountain(r *State, startdate, duration int64) *Fountain {
 	f := &Fountain{
 		startdate: startdate,
 		duration:  duration,
@@ -82,7 +83,7 @@ func newFountain(r *RatchetState, startdate, duration int64) *Fountain {
 	return f
 }
 
-// Start the ratcheting service.s
+// StartService starts the ratcheting services.
 func (f *Fountain) StartService() {
 	f.serviceDesc.c = make(chan interface{}, 2)
 	go f.service()
@@ -164,9 +165,10 @@ func (f *Fountain) sendToService(d interface{}) (err error) {
 	return nil
 }
 
-func (f *Fountain) Stop() *RatchetState {
+// Stop the fountain.
+func (f *Fountain) Stop() *State {
 	m := stopService{
-		c: make(chan *RatchetState, 1),
+		c: make(chan *State, 1),
 	}
 	err := f.sendToService(m)
 	if err != nil {
@@ -177,9 +179,9 @@ func (f *Fountain) Stop() *RatchetState {
 	return r
 }
 
-func (f *Fountain) getRatchet() *RatchetState {
+func (f *Fountain) getRatchet() *State {
 	m := getRatchet{
-		c: make(chan *RatchetState, 1),
+		c: make(chan *State, 1),
 	}
 	err := f.sendToService(m)
 	if err != nil {
@@ -191,6 +193,7 @@ func (f *Fountain) getRatchet() *RatchetState {
 	return r
 }
 
+// GetSecret from fountain.
 func (f *Fountain) GetSecret(expectedPubKey, peerPubKey *[32]byte) (*[32]byte, error) {
 	inT, pubT := new([32]byte), new([32]byte)
 	copy(inT[:], peerPubKey[:])      // Prevent programming errors.
@@ -231,7 +234,7 @@ func (f *Fountain) Unmarshall(d []byte) *Fountain {
 	}
 	startdate := binary.BigEndian.Uint64(d[:8])
 	duration := binary.BigEndian.Uint64(d[8:16])
-	r := new(RatchetState).Unmarshall(d[16:])
+	r := new(State).Unmarshall(d[16:])
 	if r == nil {
 		return nil
 	}

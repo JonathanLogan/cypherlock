@@ -1,25 +1,23 @@
 package msgcrypt
 
 import (
-	"github.com/JonathanLogan/cypherlock/clientinterface"
-	"github.com/JonathanLogan/cypherlock/types"
 	"crypto/rand"
 	"errors"
 	"io"
 
+	"github.com/JonathanLogan/cypherlock/clientinterface"
+	"github.com/JonathanLogan/cypherlock/types"
 	"golang.org/x/crypto/ed25519"
 )
 
 var (
 	// ErrNoLocksFound is returned if no matching locks could be found in the keylist of the server.
-	ErrNoLocksFound = errors.New("github.com/JonathanLogan/cypherlock/msgcrypt: No matching locks found")
+	ErrNoLocksFound = errors.New("msgcrypt: no matching locks found")
 	// ErrNoKeylist is returned if no keylist is available.
-	ErrNoKeylist = errors.New("github.com/JonathanLogan/cypherlock/msgcrypt: No keylist available")
+	ErrNoKeylist = errors.New("msgcrypt: no keylist available")
 	// ErrKeylistUntrusted is returned if the keylist could not be verified.
-	ErrKeylistUntrusted = errors.New("github.com/JonathanLogan/cypherlock/msgcryt: Keylist is untrusteed")
+	ErrKeylistUntrusted = errors.New("msgcryt: keylist is untrusteed")
 )
-
-type GetRatchetCallback func(serverURL string) (*types.RatchetList, error)
 
 // Cypherlock implements the client's github.com/JonathanLogan/cypherlock functionality.
 type Cypherlock struct {
@@ -37,6 +35,7 @@ func (cl *Cypherlock) init() {
 	}
 }
 
+// CreateLock creates a lock.
 func (cl *Cypherlock) CreateLock(passphrase []byte, secret []byte, validFrom, validTo uint64) (finalValidFrom, finalValidTo uint64, err error) {
 	cl.init()
 	secretKey, encrypted, err := EncryptRealSecret(secret, cl.randomSource)

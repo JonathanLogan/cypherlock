@@ -9,8 +9,8 @@ func TestPregenerateEntry(t *testing.T) {
 	second := NewPregenerateEntry(&first.LineHash, 2, 10, 100, [32]byte{0x03, 0x04, 0x05})
 	firstM := first.Marshall()
 	secondM := second.Marshall()
-	firstT := new(PregenerateEntry).Unmarshall(firstM)
-	secondT := new(PregenerateEntry).Unmarshall(secondM)
+	firstT := Unmarshall(firstM)
+	secondT := Unmarshall(secondM)
 
 	if firstT == nil || secondT == nil {
 		t.Fatal("Unmarshall error")

@@ -1,14 +1,15 @@
-// package main implements a github.com/JonathanLogan/cypherlock server.
+// cypherlockd implements a Cypherlock server.
 package main
 
 import (
-	"github.com/JonathanLogan/cypherlock/clrpcserver"
-	"github.com/JonathanLogan/cypherlock/ratchetserver"
 	"crypto/rand"
 	"encoding/hex"
 	"flag"
 	"fmt"
 	"os"
+
+	"github.com/JonathanLogan/cypherlock/clrpcserver"
+	"github.com/JonathanLogan/cypherlock/ratchetserver"
 )
 
 // Methods:

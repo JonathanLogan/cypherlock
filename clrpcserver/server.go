@@ -1,15 +1,16 @@
-// Package clrpcserver implements client and server RPC methods to call github.com/JonathanLogan/cypherlock.
+// Package clrpcserver implements client and server RPC methods to call Cypherlock.
 package clrpcserver
 
 import (
-	"github.com/JonathanLogan/cypherlock/ratchetserver"
-	"github.com/JonathanLogan/cypherlock/types"
 	"net"
 	"net/http"
 	"net/rpc"
+
+	"github.com/JonathanLogan/cypherlock/ratchetserver"
+	"github.com/JonathanLogan/cypherlock/types"
 )
 
-// RPCServer implements a github.com/JonathanLogan/cypherlock rpc server over http(s).
+// RPCServer implements a Cypherlock RPC server over http(s).
 type RPCServer struct {
 	rpcmethods *RPCMethods
 }
@@ -32,15 +33,18 @@ func NewRPCServer(server *ratchetserver.RatchetServer, listenAddr string) (*RPCS
 	return rs, nil
 }
 
+// RPCMethods defines the methods for a Cypherlock RPC server.
 type RPCMethods struct {
 	server *ratchetserver.RatchetServer
 }
 
+// GetKeys returns the current pregenerated keys.
 func (rm *RPCMethods) GetKeys(params types.RPCTypeNone, reply *types.RPCTypeGetKeysResponse) error {
 	reply.Keys = rm.server.GetKeys()
 	return nil
 }
 
+// Decrypt the message and return it's payload. Only use over TLS.
 func (rm *RPCMethods) Decrypt(params types.RPCTypeDecrypt, reply *types.RPCTypeDecryptResponse) error {
 	r, err := rm.server.Decrypt(params.OracleMessage)
 	if err != nil {

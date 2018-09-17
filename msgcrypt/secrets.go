@@ -2,21 +2,20 @@
 package msgcrypt
 
 import (
-	"github.com/JonathanLogan/cypherlock/ratchet"
-	"crypto"
 	"crypto/hmac"
-	_ "crypto/sha256"
+	"crypto/sha256"
 	"errors"
 	"io"
 
+	"github.com/JonathanLogan/cypherlock/ratchet"
 	"golang.org/x/crypto/curve25519"
 )
 
 var (
-	// ErrMesssageIncomplete is returned when a message is too short.
-	ErrMessageIncomplete = errors.New("github.com/JonathanLogan/cypherlock/msgcrypt: Message incomplete")
+	// ErrMessageIncomplete is returned when a message is too short.
+	ErrMessageIncomplete = errors.New("msgcrypt: message incomplete")
 	// ErrCannotDecrypt is returned if the decryption failed.
-	ErrCannotDecrypt = errors.New("github.com/JonathanLogan/cypherlock/msgcrypt: Decryption failed")
+	ErrCannotDecrypt = errors.New("msgcrypt: decryption failed")
 )
 
 func genSymNonce(rand io.Reader) (*[24]byte, error) {
@@ -28,6 +27,7 @@ func genSymNonce(rand io.Reader) (*[24]byte, error) {
 	return r, nil
 }
 
+// GenKeyPair generates a new key pair.
 func GenKeyPair(rand io.Reader) (pubkey, privkey *[32]byte, err error) {
 	pubkey = new([32]byte)
 	privkey, err = genRandom(rand)
@@ -77,7 +77,7 @@ func DecryptKey(sendKey *[32]byte, nonce *[32]byte, myPrivateKey *[32]byte) (sec
 }
 
 func keyHMAC(presecret, nonce *[32]byte) (secret *[32]byte) {
-	h := hmac.New(crypto.SHA256.New, nonce[:])
+	h := hmac.New(sha256.New, nonce[:])
 	h.Write(presecret[:])
 	secretT := h.Sum(nil)
 	secret = new([32]byte)
@@ -87,7 +87,7 @@ func keyHMAC(presecret, nonce *[32]byte) (secret *[32]byte) {
 
 func keyHASH(presecret *[32]byte) (secret *[32]byte) {
 	secret = new([32]byte)
-	h := crypto.SHA256.New()
+	h := sha256.New()
 	h.Write(presecret[:])
 	ss := h.Sum(nil)
 	copy(secret[:], ss)

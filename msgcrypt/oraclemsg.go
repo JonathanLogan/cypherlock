@@ -1,20 +1,21 @@
 package msgcrypt
 
 import (
-	"github.com/JonathanLogan/cypherlock/ratchet"
-	"github.com/JonathanLogan/cypherlock/timesource"
 	"encoding/binary"
 	"errors"
 	"io"
 	"strconv"
+
+	"github.com/JonathanLogan/cypherlock/ratchet"
+	"github.com/JonathanLogan/cypherlock/timesource"
 )
 
 var (
 	// ErrPolicyExpired is returned when the policy of a message has expired.
-	ErrPolicyExpired = errors.New("github.com/JonathanLogan/cypherlock/msgcrypt: Policy expired")
+	ErrPolicyExpired = errors.New("msgcrypt: policy expired")
 )
 
-// OracleMessage countains an oracle message for the sender, and the secret access.
+// OracleMessage contains an oracle message for the sender, and the secret access.
 type OracleMessage struct {
 	ValidFrom          uint64   // From when is the message valid.
 	ValidTo            uint64   // Until when is the message valid.
@@ -117,13 +118,14 @@ func (om *OracleMessage) Unmarshall(d []byte) (*OracleMessage, error) {
 // Encrypt the OracleMessage
 func (om OracleMessage) Encrypt(passphrase []byte, rand io.Reader) (encrypted []byte, filename string, err error) {
 	fn := strconv.FormatUint(om.ValidFrom, 10) + "-" + strconv.FormatUint(om.ValidTo, 10) + ".oracle"
-	enc, err := PasswordEncryt(passphrase, om.Marshall(), rand)
+	enc, err := PasswordEncrypt(passphrase, om.Marshall(), rand)
 	if err != nil {
 		return nil, "", err
 	}
 	return enc, fn, nil
 }
 
+// Decrypt the OracleMessage.
 func (om OracleMessage) Decrypt(passphrase, message []byte) (*OracleMessage, error) {
 	ct, err := PasswordDecrypt(passphrase, message)
 	if err != nil {
@@ -141,6 +143,7 @@ type OracleMessageTemplate struct {
 	RatchetPublicKey [32]byte // The public key for the ratchet.
 }
 
+// CreateEncrypted creates an encrypted Oracle message from template.
 func (omt OracleMessageTemplate) CreateEncrypted(passphrase []byte, secretKey *[32]byte, rand io.Reader) (enc []byte, filename string, err error) {
 	om, err := omt.Create(secretKey, rand)
 	if err != nil {

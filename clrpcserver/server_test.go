@@ -1,10 +1,11 @@
 package clrpcserver
 
 import (
-	"github.com/JonathanLogan/cypherlock/clrpcclient"
-	"github.com/JonathanLogan/cypherlock/ratchetserver"
 	"crypto/rand"
 	"testing"
+
+	"github.com/JonathanLogan/cypherlock/clrpcclient"
+	"github.com/JonathanLogan/cypherlock/ratchetserver"
 )
 
 func TestServer(t *testing.T) {

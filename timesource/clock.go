@@ -92,7 +92,7 @@ func (cl *MockClock) Now() time.Time {
 	return cl.currentTime
 }
 
-// MockTicker implements a mock ticker
+// MockTicker implements a mock ticker.
 type MockTicker struct {
 	clock    *MockClock
 	duration time.Duration
@@ -129,7 +129,7 @@ func (mt *MockTicker) Stop() {
 	close(mt.c)
 }
 
-// Return channel of ticker.
+// Chan returns channel of ticker.
 func (mt *MockTicker) Chan() <-chan time.Time {
 	return mt.co
 }

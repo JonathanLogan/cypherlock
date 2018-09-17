@@ -39,7 +39,7 @@ func keyFromPassword32(password, salt []byte) *[32]byte {
 }
 
 // PasswordEncrypt encrypts a message with a password.
-func PasswordEncryt(password, message []byte, rand io.Reader) ([]byte, error) {
+func PasswordEncrypt(password, message []byte, rand io.Reader) ([]byte, error) {
 	salt, err := genRandom(rand)
 	if err != nil {
 		return nil, err

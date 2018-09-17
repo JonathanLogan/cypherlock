@@ -3,17 +3,18 @@
 package ratchetserver
 
 import (
-	"github.com/JonathanLogan/cypherlock/msgcrypt"
-	"github.com/JonathanLogan/cypherlock/ratchet"
-	"github.com/JonathanLogan/cypherlock/timesource"
 	"errors"
 	"io"
 	"time"
 
+	"github.com/JonathanLogan/cypherlock/msgcrypt"
+	"github.com/JonathanLogan/cypherlock/ratchet"
+	"github.com/JonathanLogan/cypherlock/timesource"
 	"golang.org/x/crypto/curve25519"
 	"golang.org/x/crypto/ed25519"
 )
 
+// ServerKeys defines the keys of a ratchet server.
 type ServerKeys struct {
 	EncPublicKey  [32]byte                     // curve25519 public key.
 	EncPrivateKey [32]byte                     // curve25519 private key.
@@ -51,7 +52,7 @@ func (sk *ServerKeys) Marshall() []byte {
 // Unmarshall byte slice into serverkeys. Returns the filled serverkeys, does not change recipient.
 func (sk *ServerKeys) Unmarshall(d []byte) (*ServerKeys, error) {
 	if len(d) != 32+32+ed25519.PublicKeySize+ed25519.PrivateKeySize {
-		return nil, errors.New("github.com/JonathanLogan/cypherlock/ratchetserver: Unmarshall error.")
+		return nil, errors.New("ratchetserver: unmarshall error")
 	}
 	skn := new(ServerKeys)
 	copy(skn.EncPublicKey[:], d[0:32])
@@ -107,11 +108,12 @@ func (rs *RatchetServer) SignatureKey() [ed25519.PublicKeySize]byte {
 	return rs.keys.SigPublicKey
 }
 
+// Persist writes ratchet server data to persistence layer.
 func (rs *RatchetServer) Persist() error {
 	return rs.persist()
 }
 
-// Write data to persistance layer.
+// Write data to persistence layer.
 func (rs *RatchetServer) persist() error {
 	// StoreTypeServerKeys
 	if err := rs.persistence.Store(StoreTypeServerKeys, rs.keys.Marshall()); err != nil {
@@ -153,7 +155,7 @@ func LoadRatchetServer(persistence Persistence, rand io.Reader) (*RatchetServer,
 		if fountain := new(ratchet.Fountain).Unmarshall(d); fountain != nil {
 			rs.fountain = fountain
 		} else {
-			return nil, errors.New("github.com/JonathanLogan/cypherlock/ratchtserver: fountain state cannot be loaded.")
+			return nil, errors.New("ratchtserver: fountain state cannot be loaded")
 		}
 	} else {
 		return nil, err
@@ -163,7 +165,7 @@ func LoadRatchetServer(persistence Persistence, rand io.Reader) (*RatchetServer,
 		if pregenerator := new(ratchet.PreGenerator).Unmarshall(rs.fountain, d); pregenerator != nil {
 			rs.pregenerator = pregenerator
 		} else {
-			return nil, errors.New("github.com/JonathanLogan/cypherlock/ratchtserver: pregenerator state cannot be loaded.")
+			return nil, errors.New("ratchtserver: pregenerator state cannot be loaded")
 		}
 	} else {
 		return nil, err
@@ -181,6 +183,7 @@ func LoadRatchetServer(persistence Persistence, rand io.Reader) (*RatchetServer,
 	return rs, nil
 }
 
+// GenerateKeys generates the ratchet server keys.
 func (rs *RatchetServer) GenerateKeys() {
 	if keylist := rs.pregenerator.Generate(); keylist != nil {
 		keylist.EnvelopeKey = rs.keys.EncPublicKey
@@ -193,7 +196,7 @@ func (rs *RatchetServer) GenerateKeys() {
 	}
 }
 
-// StartService: Start the ratchetserver goroutine.
+// StartService starts the ratchet server goroutine.
 func (rs *RatchetServer) StartService() {
 	if rs.isStarted {
 		return
@@ -213,7 +216,7 @@ func (rs *RatchetServer) StartService() {
 	}()
 }
 
-// Stop background service.
+// StopService stops the background service.
 func (rs *RatchetServer) StopService() {
 	rs.ticker.Stop()
 	rs.isStarted = false

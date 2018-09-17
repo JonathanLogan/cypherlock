@@ -1,12 +1,14 @@
 package ratchet
 
 import (
-	"github.com/JonathanLogan/cypherlock/types"
 	"encoding/binary"
+
+	"github.com/JonathanLogan/cypherlock/types"
 )
 
+// PreGenerator is a fountain pregenerator.
 type PreGenerator struct {
-	ratchet        *RatchetState
+	ratchet        *State
 	startdate      int64    // Unix time of the start date.
 	duration       int64    // Number of seconds between ratchet steps.
 	pregenInterval int64    // For how long to generate keys in advance.
@@ -54,6 +56,7 @@ func (pg *PreGenerator) Unmarshall(f *Fountain, d []byte) *PreGenerator {
 	return pgn
 }
 
+// Generate new ratchet states.
 func (pg *PreGenerator) Generate() *types.RatchetList {
 	// Always make sure we're at the last position first.
 	if pg.lastCounter < pg.ratchet.Counter() {
@@ -62,7 +65,7 @@ func (pg *PreGenerator) Generate() *types.RatchetList {
 		}
 	}
 
-	// Only do pregenedation when at least half of the previous pregen has been used up or
+	// Only do pregeneration when at least half of the previous pregen has been used up or
 	// we have never done the initial pregeneration.
 	currentStep := uint64(((unixNow() - pg.startdate) / pg.duration) + 1)
 	if currentStep > pg.ratchet.Counter() {
