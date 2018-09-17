@@ -19,9 +19,6 @@ var (
 	ErrKeylistUntrusted = errors.New("github.com/JonathanLogan/cypherlock/msgcryt: Keylist is untrusteed")
 )
 
-// GetRetchetCallBack
-type GetRatchetCallback func(serverURL string) (*types.RatchetList, error)
-
 // Cypherlock implements the client's github.com/JonathanLogan/cypherlock functionality.
 type Cypherlock struct {
 	SignatureKey      *[ed25519.PublicKeySize]byte // SignatureKey for verification.
