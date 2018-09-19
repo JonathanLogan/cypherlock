@@ -31,17 +31,17 @@ var (
 )
 
 func init() {
-	flag.BoolVar(&flagCreate, "create", false, "create new github.com/JonathanLogan/cypherlock")
-	flag.BoolVar(&flagServe, "serve", false, "serve github.com/JonathanLogan/cypherlock")
-	flag.StringVar(&flagAddr, "addr", "127.0.0.1:11139", "path in which to store persistence data.")
-	flag.StringVar(&flagPath, "path", "/tmp/github.com/JonathanLogan/cypherlockd", "path in which to store persistence data.")
+	flag.BoolVar(&flagCreate, "create", false, "create new Cypherlock server")
+	flag.BoolVar(&flagServe, "serve", false, "run Cypherlock server")
+	flag.StringVar(&flagAddr, "addr", "127.0.0.1:11139", "service interface")
+	flag.StringVar(&flagPath, "path", "/tmp/cypherlockd", "path in which to store persistence data.")
 	flag.IntVar(&flagKeyPeriod, "keyperiod", 3600, "time in seconds until ratchet private key proceeds.")
 	flag.IntVar(&flagPregenPeriod, "genperiod", 24*3600, "time for which to pre-generate ratchet public keys.")
 	flag.Parse()
 }
 
 func main() {
-	fmt.Println("github.com/JonathanLogan/cypherlockd: Cypherlock minimal server. BSD version.")
+	fmt.Println("cypherlockd: minimal Cypherlock server")
 	if !flagCreate && !flagServe {
 		fmt.Println("ERR: -create or -serve required.")
 		os.Exit(1)
@@ -88,7 +88,7 @@ func main() {
 			os.Exit(1)
 		}
 		<-c
-		// UnReachable.
+		// Unreachable.
 		os.Exit(0)
 	}
 	os.Exit(0) // Unreachable.

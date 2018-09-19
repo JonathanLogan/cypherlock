@@ -33,17 +33,17 @@ var (
 
 func init() {
 	now = uint64(time.Now().Unix())
-	flag.BoolVar(&flagFunctionExtend, "extend", false, "extend existing github.com/JonathanLogan/cypherlock")
-	flag.BoolVar(&flagFunctionCreate, "create", false, "create new github.com/JonathanLogan/cypherlock")
-	flag.BoolVar(&flagFunctionUnlock, "unlock", false, "unlock github.com/JonathanLogan/cypherlock")
+	flag.BoolVar(&flagFunctionExtend, "extend", false, "extend existing Cypherlock")
+	flag.BoolVar(&flagFunctionCreate, "create", false, "create new Cypherlock")
+	flag.BoolVar(&flagFunctionUnlock, "unlock", false, "unlock Cypherlock")
 	flag.BoolVar(&flagNL, "nl", false, "add newline to secret when writing")
 
-	flag.StringVar(&flagPath, "path", "/tmp/github.com/JonathanLogan/cypherlock", "path to store lock")
-	flag.StringVar(&flagServerURL, "server", "127.0.0.1:11139", "github.com/JonathanLogan/cypherlockd server [IP:Port]")
-	flag.StringVar(&flagSignatureKey, "sigkey", "", "github.com/JonathanLogan/cypherlockd signature key. Required for -create and -extend")
+	flag.StringVar(&flagPath, "path", "/tmp/cypherlock", "path to store lock")
+	flag.StringVar(&flagServerURL, "server", "127.0.0.1:11139", "Cypherlock server [IP:Port]")
+	flag.StringVar(&flagSignatureKey, "sigkey", "", "cypherlockd signature key. Required for -create and -extend")
 
 	flag.Uint64Var(&flagValidFrom, "from", now, "earliest unix timestamp at which the lock is valid")
-	flag.Uint64Var(&flagValidTo, "to", now+1800, "earliest unix timestamp at which the lock is valid")
+	flag.Uint64Var(&flagValidTo, "to", now+1800, "latest unix timestamp at which the lock is valid")
 	flag.IntVar(&flagFD, "fd", 3, "file descriptor to read/write secret from. Required for -create and -unlock")
 
 	flag.Parse()
