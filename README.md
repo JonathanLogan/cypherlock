@@ -5,6 +5,8 @@
 Ratchet based key expiry tool against forced decryption and for expiring
 backups.
 
+*PROOF OF CONCEPT CODE - DO NOT USE IN PRODUCTION UNLESS YOU KNOW EXACTLY WHAT YOU DO*
+
 Requirements:
  - Linux knowledge
  - Raspberry Pi
