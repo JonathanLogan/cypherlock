@@ -8,3 +8,14 @@ backups.
 Requirements:
  - Linux knowledge
  - Rapsberry Pi
+
+### Installation
+
+```
+go get -u -v github.com/JonathanLogan/cypherlock/cmd/...
+```
+
+
+### Presentations
+
+- [Cypherlock at BalCCon2k18](doc/Cypherlock-BalCCon2k18.pdf)
