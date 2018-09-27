@@ -5,7 +5,7 @@ import (
 	"crypto/rand"
 	"testing"
 
-	"github.com/JonathanLogan/cypherlock/timesource"
+	"github.com/JonathanLogan/timesource"
 )
 
 func TestOracleMessageMarshall(t *testing.T) {

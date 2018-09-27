@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/JonathanLogan/cypherlock/timesource"
+	"github.com/JonathanLogan/timesource"
 )
 
 var nc *timesource.MockClock

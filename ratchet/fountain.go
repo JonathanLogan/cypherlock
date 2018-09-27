@@ -6,7 +6,7 @@ import (
 	"io"
 	"time"
 
-	"github.com/JonathanLogan/cypherlock/timesource"
+	"github.com/JonathanLogan/timesource"
 )
 
 // SecretFunc is a function that returns a secret for a ratchet key.

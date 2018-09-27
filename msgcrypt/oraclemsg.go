@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	"github.com/JonathanLogan/cypherlock/ratchet"
-	"github.com/JonathanLogan/cypherlock/timesource"
+	"github.com/JonathanLogan/timesource"
 )
 
 var (

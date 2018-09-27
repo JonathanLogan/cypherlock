@@ -9,7 +9,7 @@ import (
 
 	"github.com/JonathanLogan/cypherlock/msgcrypt"
 	"github.com/JonathanLogan/cypherlock/ratchet"
-	"github.com/JonathanLogan/cypherlock/timesource"
+	"github.com/JonathanLogan/timesource"
 	"golang.org/x/crypto/curve25519"
 	"golang.org/x/crypto/ed25519"
 )

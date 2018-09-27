@@ -7,10 +7,9 @@
 package terminal // import "golang.org/x/crypto/ssh/terminal"
 
 import (
+	"golang.org/x/sys/unix"
 	"io"
 	"syscall"
-
-	"golang.org/x/sys/unix"
 )
 
 // State contains the state of a terminal.
@@ -71,6 +70,33 @@ func ReadPassword(fd int) ([]byte, error) {
 	return ret, nil
 }
 
+// MakeRaw puts the terminal connected to the given file descriptor into raw
+// mode and returns the previous state of the terminal so that it can be
+// restored.
+// see http://cr.illumos.org/~webrev/andy_js/1060/
+func MakeRaw(fd int) (*State, error) {
+	termios, err := unix.IoctlGetTermios(fd, unix.TCGETS)
+	if err != nil {
+		return nil, err
+	}
+
+	oldState := State{termios: *termios}
+
+	termios.Iflag &^= unix.IGNBRK | unix.BRKINT | unix.PARMRK | unix.ISTRIP | unix.INLCR | unix.IGNCR | unix.ICRNL | unix.IXON
+	termios.Oflag &^= unix.OPOST
+	termios.Lflag &^= unix.ECHO | unix.ECHONL | unix.ICANON | unix.ISIG | unix.IEXTEN
+	termios.Cflag &^= unix.CSIZE | unix.PARENB
+	termios.Cflag |= unix.CS8
+	termios.Cc[unix.VMIN] = 1
+	termios.Cc[unix.VTIME] = 0
+
+	if err := unix.IoctlSetTermios(fd, unix.TCSETS, termios); err != nil {
+		return nil, err
+	}
+
+	return &oldState, nil
+}
+
 // Restore restores the terminal connected to the given file descriptor to a
 // previous state.
 func Restore(fd int, oldState *State) error {
@@ -86,4 +112,13 @@ func GetState(fd int) (*State, error) {
 	}
 
 	return &State{termios: *termios}, nil
+}
+
+// GetSize returns the dimensions of the given terminal.
+func GetSize(fd int) (width, height int, err error) {
+	ws, err := unix.IoctlGetWinsize(fd, unix.TIOCGWINSZ)
+	if err != nil {
+		return 0, 0, err
+	}
+	return int(ws.Col), int(ws.Row), nil
 }
